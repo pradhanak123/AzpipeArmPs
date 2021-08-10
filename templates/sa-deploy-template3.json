@@ -1,0 +1,78 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+  "storageName": {
+      "type": "string",
+	  "metadata": {
+        "description": "Storage Account Name"
+      }
+	 },
+	"storageAccountType": {
+      "type": "string",
+      "metadata": {
+        "description": "Storage Account type"
+      }
+    },
+	 "storageType": {
+		"type": "string",
+	  "metadata": {
+		"description": "Storage Account Kind"
+      }
+	 },
+	 "BlobAccessTier": {
+		"type": "string"
+	 },
+	 "container1": {
+		"type": "string",
+	  "metadata": {
+		"description": "container 1"
+      }
+	 },
+	 "container2": {
+		"type": "string",
+	  "metadata": {
+		"description": "container 2"
+      }
+	 }
+	 
+  },
+  
+   "variables": {
+      "storageAccountName": "[parameters('storageName')]"
+    },
+  "resources": [
+    {
+      "type": "Microsoft.Storage/storageAccounts",
+      "name": "[variables('storageAccountName')]",
+      "apiVersion": "2021-02-01",
+      "location": "[resourceGroup().location]",
+      "sku": {
+          "name": "[parameters('storageAccountType')]"
+      },
+      "kind": "[parameters('storageType')]", 
+	  "properties": {
+		"accessTier": "[parameters('BlobAccessTier')]"
+      },
+      "resources": [
+		
+		{
+			 "name": "[concat('default/', parameters('container1'))]",
+			"type": "blobServices/containers",
+			"apiVersion": "2021-02-01",
+			"dependsOn": [
+				"[variables('storageAccountName')]"
+			]
+		},
+		{
+			 "name": "[concat('default/', parameters('container2'))]",
+			"type": "blobServices/containers",
+			"apiVersion": "2021-02-01",
+			"dependsOn": [
+				"[variables('storageAccountName')]"
+			]
+		}
+	]	
+	}
+	]
+}
