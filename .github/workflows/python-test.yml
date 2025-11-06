@@ -38,4 +38,3 @@ jobs:
       - name: execute py script # run file
         run: |
           python psscripts/my_file.py
-          shell: bash
