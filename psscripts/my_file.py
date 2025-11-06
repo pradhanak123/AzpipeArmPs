@@ -9,4 +9,4 @@ else:
     num = 1
 
 # to set output, print to shell in following syntax
-print(f"::set-output name=num_squared::{num ** 2}")
+print(" num_squared ", num ** 2)
