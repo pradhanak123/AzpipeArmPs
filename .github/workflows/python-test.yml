@@ -27,7 +27,9 @@ jobs:
 
       # Runs a single command using the runners shell
       - name: Install Python
-        run: actions/setup-python@v5 
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
       - name: Install Dependencies
         run: pip install -r requirements.txt
         shell: bash
